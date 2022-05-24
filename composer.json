@@ -1,0 +1,26 @@
+{
+    "name": "razoyo/module-animalprofile",
+    "description": "Give customers the ability to have an animal profile",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Deepak Jain",
+            "email": "erdeepakjain1993@gmail.com"
+        },
+        {
+            "name": "William Byrne",
+            "email": "wbyrne@razoyo.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Razoyo\\AnimalProfile\\": ""
+        }
+    }
+}

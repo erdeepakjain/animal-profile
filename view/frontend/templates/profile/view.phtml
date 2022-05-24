@@ -1,0 +1,61 @@
+<?php
+/**
+ * @var $block \Razoyo\AnimalProfile\Block\Profile\Photo
+ */
+?>
+<p><?= $block->getGreeting() ?></p>
+<?php $animalProfiles = $block->getAnimalProfiles(); ?>
+<?php $getProfile = $block->getProfile(); ?>
+
+<fieldset class="fieldset animal-info">
+    <div class="field field-animal_profile">
+        <label class="label" for="firstname"><span>Animal Profile</span></label>
+        <div class="control">
+            <select name="animal_profile" id="animal_profile">
+                <?php foreach ($animalProfiles as $profile): ?>
+                    <option value="<?= $profile['value']; ?>" <?php if ($getProfile == $profile['value']): echo 'selected'; endif;?>>
+                        <?= $profile['label']; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</fieldset>
+
+
+<div id="animalid-photo"></div>
+<script>
+    require(['jquery', 'domReady!'], function ($) {
+
+        $(document).ready(function() {
+            $('#animal_profile').change(function(){
+                var value = $(this).val();
+                updateProfile(value);
+            }).trigger("change") 
+        });
+
+        function updateProfile(profileVal) {
+            $.ajax({
+                url: '<?= $block->getPhotoUrl() ?>',
+                type: 'GET',
+                dataType: 'json',
+                showLoader: true,
+                data: {
+                    'animal_profile': profileVal
+                },
+            }).done(
+                function (response) {
+                    const photoImg = document.createElement('img'); 
+                    photoImg.alt = 'Profile photo';
+                    photoImg.src = response.photo;
+
+                    const photoDiv = document.getElementById('animalid-photo');
+                    if (photoDiv) {
+                        photoDiv.innerHTML = '';
+                        photoDiv.appendChild(photoImg);
+                    }
+                }
+            );
+        }
+    });
+</script>
